@@ -128,6 +128,27 @@ def pokedex(name='broken',gen='0'):
 	  <arg1> register
 	  <arg2> name of registee
 	  example: /pokedex register brian'''
+	
+	'''
+	Possibly some useful stuff instead of opening loads of textfiles:
+	headers = ['approved','both_need','brian_dex','brian_need','jake_dex','jake_need',
+	          'gen1','gen2','gen3','ty_dex','ty_need']
+	path = r'C:\\Users\\Ty Dickinson\\DumbBot\\text'
+	all_files = glob.glob(os.path.join(path, "*.txt"))
+	list_of_dfs = [pd.read_csv(f,header=None) for f in all_files]
+	combined_df = pd.concat(list_of_dfs, ignore_index=True,axis=1)
+	combined_df.columns = headers
+
+	combined_df.approved returns just the approved column.
+	Since some files are longer than others, use .dropna() to only return
+	data in the file. Another function that may be useful is .tolist().
+
+	For example, you can replace dex = [dex1,dex2,dex3] with
+	dex = combined_df.gen1.dropna().tolist() + combined_df.gen2.dropna().tolist() + combined_df.gen3.dropna().tolist()
+
+	Since when someone adds a new pokemon, it is written to the textfile, it will be added to the combined_df
+	the next time pokedex is called.
+	'''
 
 	try:
 		name = name.lower()
