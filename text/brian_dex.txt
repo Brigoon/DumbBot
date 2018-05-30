@@ -336,3 +336,5 @@ flygon
 moltres
 mew
 cacturne
+breloom
+crawdaunt

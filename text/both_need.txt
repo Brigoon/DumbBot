@@ -17,7 +17,6 @@ Volbeat
 Wailord
 Torkoal
 Lunatone
-Crawdaunt
 Cradily
 Armaldo
 Milotic

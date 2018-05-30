@@ -1,20 +1,4 @@
-@@@@@@@@@@ GEN 1 @@@@@@@@@@
-Kangaskhan
-Mr. Mime
-Articuno
-Zapdos
-@@@@@@@@@@ GEN 2 @@@@@@@@@@
-Feraligatr
-Unown
-Heracross
-Corsola
-Miltank
-Raikou
-Entei
-Suicune
-@@@@@@@@@@ GEN 3 @@@@@@@@@@
 Masquerain
-Breloom
 Vigoroth
 Slaking
 Volbeat

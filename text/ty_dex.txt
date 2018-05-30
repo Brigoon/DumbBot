@@ -322,3 +322,7 @@ hitmonlee
 bellossom
 girafarig
 mew
+sharpedo
+crawdaunt
+donphan
+blissey

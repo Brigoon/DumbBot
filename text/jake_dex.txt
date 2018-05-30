@@ -353,3 +353,4 @@ metagross
 shelgon
 salamence
 milotic
+crawdaunt
