@@ -1,10 +1,6 @@
 @@@@@@@@@@ GEN 1 @@@@@@@@@@
 Kangaskhan
-Mr. Mime
-Articuno
-Zapdos
 @@@@@@@@@@ GEN 2 @@@@@@@@@@
-Feraligatr
 Heracross
 Miltank
 Raikou
@@ -17,12 +13,9 @@ Volbeat
 Wailord
 Torkoal
 Lunatone
-Cradily
-Armaldo
 Milotic
 Tropius
 Chimecho
 Relicanth
 Shelgon
 Salamence
-Latias

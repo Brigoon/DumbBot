@@ -236,7 +236,7 @@ def pokedex(name='broken',gen='0',extra='0'):
 				yield from bot.say(name[0].upper()+name[1:].lower()+' is not a valid user')
 				return
 
-			if extra != '':
+			if extra != '0':
 				gen = gen + ' ' + extra
 
 			dex1 = open('text/pokedex_gen1.txt','r')
