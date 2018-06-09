@@ -337,3 +337,4 @@ armaldo
 banette
 pelipper
 articuno
+mr. mime

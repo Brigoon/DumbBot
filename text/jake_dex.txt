@@ -356,3 +356,5 @@ milotic
 crawdaunt
 latias
 mewtwo
+cradily
+armaldo
