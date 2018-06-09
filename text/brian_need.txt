@@ -5,10 +5,6 @@ Volbeat
 Wailord
 Torkoal
 Lunatone
-Crawdaunt
-Lileep
-Cradily
-Armaldo
 Milotic
 Tropius
 Chimecho

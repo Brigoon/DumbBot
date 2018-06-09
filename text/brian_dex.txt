@@ -338,3 +338,9 @@ mew
 cacturne
 breloom
 crawdaunt
+zapdos
+feraligatr
+lileep
+cradily
+articuno
+armaldo

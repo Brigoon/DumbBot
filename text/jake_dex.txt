@@ -354,3 +354,5 @@ shelgon
 salamence
 milotic
 crawdaunt
+latias
+mewtwo

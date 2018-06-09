@@ -1,14 +1,36 @@
+@@@@@@@@@@ GEN 1 @@@@@@@@@@
+Kangaskhan
+Mr. Mime
+Articuno
+@@@@@@@@@@ GEN 2 @@@@@@@@@@
 Quilava
 Typhlosion
 Feraligatr
 Togetic
-Pineco
 Forretress
 Steelix
 Heracross
-Donphan
 Tyrogue
 Miltank
-Blissey
 Raikou
 Entei
+@@@@@@@@@@ GEN 3 @@@@@@@@@@
+Kirlia
+Gardevoir
+Masquerain
+Vigoroth
+Slaking
+Volbeat
+Wailord
+Torkoal
+Vibrava
+Flygon
+Lunatone
+Milotic
+Tropius
+Chimecho
+Relicanth
+Shelgon
+Salamence
+Metang
+Metagross
