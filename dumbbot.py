@@ -262,7 +262,7 @@ def pokedex(name='broken',gen='0',extra='0'):
 					file = open('text/'+name+'_dex.txt','a')
 					file.write(pokemon)
 					file.close()
-					yield from bot.say(pokemon.title()+' has been succesfully added!')
+					yield from bot.say(pokemon.title().rstrip()+' has been succesfully added!')
 				else:
 					yield from bot.say(pokemon.title().rstrip()+' is already in '+name.title()+'\'s Pokedex')
 
