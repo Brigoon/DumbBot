@@ -159,7 +159,7 @@ def pokedex(name='broken',gen='0',extra='0'):
 		# Adds a new user to the approved list
 		if name=='register':
 			if gen+'\n' in approved:
-				yield from bot.say(gen[0].upper()+gen[1:].lower()+' has already been approved')
+				yield from bot.say(gen.title()+' has already been approved')
 				return
 
 			new_dex = open('text/'+gen+'_dex.txt','w')
@@ -167,12 +167,12 @@ def pokedex(name='broken',gen='0',extra='0'):
 			new_approved = open('text/approved.txt','a')
 			new_approved.write(gen+'\n')
 			new_approved.close()
-			yield from bot.say(gen[0].upper()+gen[1:]+' has been approved!')
+			yield from bot.say(gen.title()+' has been approved!')
 			
 		# Outputs what <arg1> needs with the option to restrict the generation
 		elif gen=='0' or gen=='1' or gen=='2' or gen=='3':
 			if not (((name+'\n') in approved) or name=='both'):
-				yield from bot.say(name[0].upper()+name[1:].lower()+' is not a valid user')
+				yield from bot.say(name.title()+' is not a valid user')
 				return
 
 			need = open('text/'+name+'_need.txt','w')
@@ -210,19 +210,19 @@ def pokedex(name='broken',gen='0',extra='0'):
 							if 'mr. mime' in line:
 								need.write('Mr. Mime\n')
 							else:
-								need.write(line[0].upper()+line[1:])
+								need.write(line.title())
 					else:
 						if not (line in check[0]):
 							if 'mr. mime' in line:
 								need.write('Mr. Mime\n')
 							else:
-								need.write(line[0].upper()+line[1:])
+								need.write(line.title())
 				dex[i].close()
 			need.close()
 
 			need = open('text/'+name+'_need.txt','r')
 
-			yield from bot.say(name[0].upper()+name[1:].lower()+' still need'+addition+':')
+			yield from bot.say(name.title()+' still need'+addition+':')
 			read = need.read()
 			need.close()
 			if(len(read)==0):
@@ -233,7 +233,7 @@ def pokedex(name='broken',gen='0',extra='0'):
 		# Adds <arg2> to <arg1>s pokedex
 		else:
 			if not ((name+'\n') in approved):
-				yield from bot.say(name[0].upper()+name[1:].lower()+' is not a valid user')
+				yield from bot.say(name.title()+' is not a valid user')
 				return
 
 			if extra != '0':
@@ -262,12 +262,12 @@ def pokedex(name='broken',gen='0',extra='0'):
 					file = open('text/'+name+'_dex.txt','a')
 					file.write(pokemon)
 					file.close()
-					yield from bot.say(pokemon[0].upper()+pokemon[1:].rstrip()+' has been succesfully added!')
+					yield from bot.say(pokemon.title()+' has been succesfully added!')
 				else:
-					yield from bot.say(pokemon[0].upper()+pokemon[1:].rstrip()+' is already in '+name[0].upper()+name[1:]+'\'s Pokedex')
+					yield from bot.say(pokemon.title().rstrip()+' is already in '+name.title()+'\'s Pokedex')
 
 			else:
-				yield from bot.say(pokemon[0].upper()+pokemon[1:].rstrip()+' is not a valid Pokemon')
+				yield from bot.say(pokemon.title().rstrip()+' is not a valid Pokemon')
 
 	except:
 		yield from bot.say('use \'/help pokedex\'')
