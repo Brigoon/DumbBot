@@ -69,7 +69,7 @@ def alex():
 @asyncio.coroutine
 def jake():
 	'''Just tells it as it is'''
-	yield from bot.say('Jake *still* doesn\'t have Mewtwo LuL')
+	yield from bot.say('Jake is a pretty great dude')
 
 @bot.command()
 @asyncio.coroutine
@@ -109,7 +109,7 @@ def bet(*args):
 
 @bot.command()
 @asyncio.coroutine
-def pokedex(name='broken',gen='0'):
+def pokedex(name='broken',gen='0',extra='0'):
 	'''Shows which Pokemon the user still needs to catch
 	<arg1>:
 	  brian: shows Brians needed pokemon
@@ -235,6 +235,9 @@ def pokedex(name='broken',gen='0'):
 			if not ((name+'\n') in approved):
 				yield from bot.say(name[0].upper()+name[1:].lower()+' is not a valid user')
 				return
+
+			if extra != '':
+				gen = gen + ' ' + extra
 
 			dex1 = open('text/pokedex_gen1.txt','r')
 			dex2 = open('text/pokedex_gen2.txt','r')
