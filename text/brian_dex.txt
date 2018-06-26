@@ -345,3 +345,4 @@ cradily
 articuno
 armaldo
 masquerain
+rattata-alolan

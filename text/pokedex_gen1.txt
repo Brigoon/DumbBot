@@ -109,6 +109,7 @@ voltorb
 electrode
 exeggcute
 exeggutor
+exeggutor-alolan
 cubone
 marowak
 hitmonlee

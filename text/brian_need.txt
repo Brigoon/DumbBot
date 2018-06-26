@@ -1,28 +1,9 @@
-@@@@@@@@@@ GEN 1 @@@@@@@@@@
+Raticate-Alolan
+Sandshrew-Alolan
+Sandslash-Alolan
+Vulpix-Alolan
+Ninetales-Alolan
+Meowth-Alolan
+Persian-Alolan
 Kangaskhan
 Mr. Mime
-@@@@@@@@@@ GEN 2 @@@@@@@@@@
-Unown
-Heracross
-Corsola
-Miltank
-Raikou
-Entei
-Suicune
-@@@@@@@@@@ GEN 3 @@@@@@@@@@
-Masquerain
-Vigoroth
-Slaking
-Volbeat
-Wailord
-Torkoal
-Lunatone
-Milotic
-Tropius
-Chimecho
-Absol
-Relicanth
-Shelgon
-Salamence
-Latias
-Rayquaza
