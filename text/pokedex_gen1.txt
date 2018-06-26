@@ -17,7 +17,9 @@ pidgey
 pidgeotto
 pidgeot
 rattata
+rattata-alolan
 raticate
+raticate-alolan
 spearow
 fearow
 ekans
@@ -25,7 +27,9 @@ arbok
 pikachu
 raichu
 sandshrew
+sandshrew-alolan
 sandslash
+sandslash-alolan
 nidoran female
 nidorina
 nidoqueen
@@ -35,7 +39,9 @@ nidoking
 clefairy
 clefable
 vulpix
+vulpix-alolan
 ninetales
+ninetales-alolan
 jigglypuff
 wigglytuff
 zubat
@@ -50,7 +56,9 @@ venomoth
 diglett
 dugtrio
 meowth
+meowth-alolan
 persian
+persian-alolan
 psyduck
 golduck
 mankey
