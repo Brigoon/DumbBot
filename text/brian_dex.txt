@@ -346,3 +346,4 @@ articuno
 armaldo
 masquerain
 rattata-alolan
+exeggutor-alolan

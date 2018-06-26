@@ -358,3 +358,7 @@ latias
 mewtwo
 cradily
 armaldo
+raticate-alolan
+vigoroth
+slaking
+rattata-alolan

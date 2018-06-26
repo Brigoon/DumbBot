@@ -94,7 +94,9 @@ dodrio
 seel
 dewgong
 grimer
+grimer-alolan
 muk
+muk-alolan
 shellder
 cloyster
 gastly

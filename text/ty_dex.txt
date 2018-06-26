@@ -339,3 +339,4 @@ pelipper
 articuno
 mr. mime
 volbeat
+exeggutor-alolan
