@@ -1,3 +1,15 @@
+@@@@@@@@@@ GEN 1 @@@@@@@@@@
+Kangaskhan
+Mr. Mime
+@@@@@@@@@@ GEN 2 @@@@@@@@@@
+Unown
+Heracross
+Corsola
+Miltank
+Raikou
+Entei
+Suicune
+@@@@@@@@@@ GEN 3 @@@@@@@@@@
 Masquerain
 Vigoroth
 Slaking

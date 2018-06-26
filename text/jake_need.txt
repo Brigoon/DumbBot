@@ -10,6 +10,5 @@ Volbeat
 Wailord
 Torkoal
 Lunatone
-Armaldo
 Tropius
 Relicanth

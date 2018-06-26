@@ -338,3 +338,4 @@ banette
 pelipper
 articuno
 mr. mime
+volbeat
