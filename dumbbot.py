@@ -33,46 +33,6 @@ def on_message(message):
 
 @bot.command()
 @asyncio.coroutine
-def ty():
-	'''Just tells it as it is
-	Ty is such a little bitch that it required a command'''
-	yield from bot.say('Ty is a big ass bitch')
-
-@bot.command()
-@asyncio.coroutine
-def brian():
-	'''Just tells it as it is
-	Brian is so swaggy that it required a command'''
-	yield from bot.say('Brian is the swaggiest motherfucker')
-
-@bot.command()
-@asyncio.coroutine
-def ryan():
-	'''Just tells it as it is
-	Ryan is such a faggot, ugh, hate that guy'''
-	yield from bot.say('Ryan is a faggot')
-
-@bot.command()
-@asyncio.coroutine
-def bryony():
-	'''Just tells it as it is'''
-	yield from bot.say('''Bryony is a savage
-and needs to stop dabbing''')
-
-@bot.command()
-@asyncio.coroutine
-def alex():
-	'''Just tells it as it is'''
-	yield from bot.say('Alex is the most badass of them all')
-
-@bot.command()
-@asyncio.coroutine
-def jake():
-	'''Just tells it as it is'''
-	yield from bot.say('Jake is a pretty great dude')
-
-@bot.command()
-@asyncio.coroutine
 def link(*arg):
 	'''Provides the link desired
 	<arg> which link you want. Links are:
@@ -86,14 +46,10 @@ def link(*arg):
 		yield from bot.say('https://discordpy.readthedocs.io/en/latest/api.html')
 	elif arg[0] == 'rl':
 		yield from bot.say('https://www.twitch.tv/rocketleague')
-	elif arg[0] == '?':
-		yield from bot.say('https://www.youtube.com/watch?v=9G7aT6p_aGk')
 	elif arg[0] == 'repo':
 		yield from bot.say('https://github.com/Brigoon/DumbBot')
 	elif arg[0] == 'nests':
 		yield from bot.say('https://thesilphroad.com/atlas')
-	elif arg[0] == 'map':
-		yield from bot.say('https://www.joshwoodward.com/mod/pokemon/map/#1111000030')
 	else:
 		yield from bot.say('use \'/help link\' for valid links')
 
