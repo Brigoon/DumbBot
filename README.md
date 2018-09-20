@@ -72,48 +72,6 @@ This is mainly used by me to keep track of websites I frequent:
 /link <link abbreviation>
 ```
 
-### ty
-
-This command is dumb and is just for fun with my friends. Usage:
-```
-/ty
-```
-
-### brian
-
-This command is dumb and is just for fun with my friends. Usage:
-```
-/brian
-```
-
-### ryan
-
-This command is dumb and is just for fun with my friends. Usage:
-```
-/ryan
-```
-
-### bryony
-
-This command is dumb and is just for fun with my friends. Usage:
-```
-/bryony
-```
-
-### alex
-
-This command is dumb and is just for fun with my friends. Usage:
-```
-/alex
-```
-
-### jake
-
-This command is very true. Dumb, but very true. Usage:
-```
-/jake
-```
-
 ### nuke
 
 This is only to be used by admins. This will clear out an entire channel. I mainly use it within my test channels when debugging new commands:
