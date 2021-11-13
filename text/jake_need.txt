@@ -1,0 +1,20 @@
+@@@@@@@@@@ GEN 1 @@@@@@@@@@
+Rattata-Alolan
+Sandshrew-Alolan
+Sandslash-Alolan
+Vulpix-Alolan
+Ninetales-Alolan
+Meowth-Alolan
+Persian-Alolan
+Exeggutor-Alolan
+@@@@@@@@@@ GEN 2 @@@@@@@@@@
+Heracross
+@@@@@@@@@@ GEN 3 @@@@@@@@@@
+Lombre
+Ludicolo
+Volbeat
+Wailord
+Torkoal
+Lunatone
+Tropius
+Relicanth
