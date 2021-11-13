@@ -1,7 +1,6 @@
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
-import asyncio
 import random
 
 client = discord.Client()
@@ -9,31 +8,16 @@ bot_prefix = "/"
 bot = commands.Bot(command_prefix=bot_prefix)
 
 @bot.event
-@asyncio.coroutine
-def on_ready():
+async def on_ready():
 	print("Bot Online!")
 
 @bot.event
-@asyncio.coroutine
-def on_message(message):
+async def on_message(message):
 	print('{} said:\"{}\" in #{}'.format(message.author.name, message.content, message.channel.name))
-
-	if message.content.startswith('http') and message.author.id != message.server.me.id:
-		yield from bot.send_message(discord.Object(id='380028343611031565'), message.content)
-	elif (not message.content.startswith('!')) and message.channel.id == '381123909556371456':
-		if message.author.id != '190198409150464001':
-			yield from bot.delete_message(message)
-	elif (not message.content.startswith('http')) and message.channel.id == '380028343611031565':
-		if not message.attachments:
-			yield from bot.delete_message(message)
-	elif 'yeet' in message.content.lower():
-		yield from bot.add_reaction(message,'\N{EYES}')
-
-	yield from bot.process_commands(message)
+	await bot.process_commands(message)
 
 @bot.command()
-@asyncio.coroutine
-def link(*arg):
+async def link(ctx, flag = 'bad'):
 	'''Provides the link desired
 	<arg> which link you want. Links are:
 	  api
@@ -42,30 +26,28 @@ def link(*arg):
 	  repo
 	  nests
 	  map (only works in ann arbor)'''
-	if arg[0] == 'api':
-		yield from bot.say('https://discordpy.readthedocs.io/en/latest/api.html')
-	elif arg[0] == 'rl':
-		yield from bot.say('https://www.twitch.tv/rocketleague')
-	elif arg[0] == 'repo':
-		yield from bot.say('https://github.com/Brigoon/DumbBot')
-	elif arg[0] == 'nests':
-		yield from bot.say('https://thesilphroad.com/atlas')
+	if flag == 'api':
+		await ctx.send('https://discordpy.readthedocs.io/en/latest/api.html')
+	elif flag == 'rl':
+		await ctx.send('https://www.twitch.tv/rocketleague')
+	elif flag == 'repo':
+		await ctx.send('https://github.com/Brigoon/DumbBot')
+	elif flag == 'nests':
+		await ctx.send('https://thesilphroad.com/atlas')
 	else:
-		yield from bot.say('use \'/help link\' for valid links')
+		await ctx.send('use \'/help link\' for valid links')
 
 @bot.command()
-@asyncio.coroutine
-def bet(*args):
+async def bet(ctx, *args):
 	'''YOU WANNA BET??
 	<argn> nth bet string'''
 	if len(args) > 1:
-		yield from bot.say(random.choice(args))
+		await ctx.send(random.choice(args))
 	else:
-		yield from bot.say('use \'/help bet\'')
+		await ctx.send('use \'/help bet\'')
 
 @bot.command()
-@asyncio.coroutine
-def pokedex(name='broken',gen='0',extra='0'):
+async def pokedex(ctx, name='broken',gen='0',extra='0'):
 	'''Shows which Pokemon the user still needs to catch
 	<arg1>:
 	  brian: shows Brians needed pokemon
@@ -115,7 +97,7 @@ def pokedex(name='broken',gen='0',extra='0'):
 		# Adds a new user to the approved list
 		if name=='register':
 			if gen+'\n' in approved:
-				yield from bot.say(gen.title()+' has already been approved')
+				await ctx.send(gen.title()+' has already been approved')
 				return
 
 			new_dex = open('text/'+gen+'_dex.txt','w')
@@ -123,12 +105,12 @@ def pokedex(name='broken',gen='0',extra='0'):
 			new_approved = open('text/approved.txt','a')
 			new_approved.write(gen+'\n')
 			new_approved.close()
-			yield from bot.say(gen.title()+' has been approved!')
+			await ctx.send(gen.title()+' has been approved!')
 			
 		# Outputs what <arg1> needs with the option to restrict the generation
 		elif gen=='0' or gen=='1' or gen=='2' or gen=='3':
 			if not (((name+'\n') in approved) or name=='both'):
-				yield from bot.say(name.title()+' is not a valid user')
+				await ctx.send(name.title()+' is not a valid user')
 				return
 
 			need = open('text/'+name+'_need.txt','w')
@@ -178,18 +160,18 @@ def pokedex(name='broken',gen='0',extra='0'):
 
 			need = open('text/'+name+'_need.txt','r')
 
-			yield from bot.say(name.title()+' still need'+addition+':')
+			await ctx.send(name.title()+' still need'+addition+':')
 			read = need.read()
 			need.close()
 			if(len(read)==0):
-				yield from bot.say('Nothing! You got all of them!')
+				await ctx.send('Nothing! You got all of them!')
 			else:
-				yield from bot.say(read)
+				await ctx.send(read)
 
 		# Adds <arg2> to <arg1>s pokedex
 		else:
 			if not ((name+'\n') in approved):
-				yield from bot.say(name.title()+' is not a valid user')
+				await ctx.send(name.title()+' is not a valid user')
 				return
 
 			if extra != '0':
@@ -218,35 +200,37 @@ def pokedex(name='broken',gen='0',extra='0'):
 					file = open('text/'+name+'_dex.txt','a')
 					file.write(pokemon)
 					file.close()
-					yield from bot.say(pokemon.title().rstrip()+' has been succesfully added!')
+					await ctx.send(pokemon.title().rstrip()+' has been succesfully added!')
 				else:
-					yield from bot.say(pokemon.title().rstrip()+' is already in '+name.title()+'\'s Pokedex')
+					await ctx.send(pokemon.title().rstrip()+' is already in '+name.title()+'\'s Pokedex')
 
 			else:
-				yield from bot.say(pokemon.title().rstrip()+' is not a valid Pokemon')
+				await ctx.send(pokemon.title().rstrip()+' is not a valid Pokemon')
 
 	except:
-		yield from bot.say('use \'/help pokedex\'')
+		await ctx.send('use \'/help pokedex\'')
 		raise
 
-@bot.command(pass_context=True)
-@asyncio.coroutine
-def nuke(ctx):
+@bot.command()
+async def nuke(ctx):
 	'''Only Brigoon can use this command
 	removes all messages of a channel'''
-	if ctx.message.author.id == '236886430616518666':
-		if ctx.message.channel.name == 'test':
-			yield from bot.purge_from(ctx.message.channel)
+	if ctx.author.id == 236886430616518666:
+		if ctx.channel.id == 381186197965373440:
+			await ctx.channel.purge(limit=100000000)
 		else:
-			yield from bot.say('Wrong channel idiot')
+			await ctx.send('Wrong channel idiot')
+	else:
+		await ctx.send(ctx.author.id)
 
-@bot.command(pass_context=True)
-@asyncio.coroutine
-def clean(ctx,arg):
+@bot.command()
+async def clean(ctx, arg: int):
 	'''Only Brigoon can use this command
 	<arg> is number of lines to remove'''
-	if ctx.message.author.id == '236886430616518666':
-		yield from bot.purge_from(ctx.message.channel,limit=int(arg))
+	if ctx.author.id == 236886430616518666:
+		await ctx.channel.purge(limit=arg)
+	else:
+		await ctx.send(ctx.author.id)
 
 bot_ID_txt = open("text/bot_ID.txt","r")
 bot_ID = bot_ID_txt.read()
