@@ -117,8 +117,4 @@ There are a number of Pokemon I would like to use TM's on, but can't remember th
 ## Authors
 
 * **Brian Tomiuk**
-
-## Acknowledgments
-
-* Hat tip to Ty Dickinson for helping to shorten the file
-
+* **Ty Dickinson**
