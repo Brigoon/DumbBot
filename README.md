@@ -118,8 +118,3 @@ There are a number of Pokemon I would like to use TM's on, but can't remember th
 
 * **Brian Tomiuk**
 * **Ty Dickinson**
-
-## Acknowledgments
-
-* Hat tip to Ty Dickinson for helping to shorten the file
-
