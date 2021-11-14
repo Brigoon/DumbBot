@@ -2,6 +2,7 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import random
+import re
 
 client = discord.Client()
 bot_prefix = "/"
@@ -20,7 +21,7 @@ async def on_message(ctx):
 		await channel.send(ctx.content)
 	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
 		await ctx.delete()
-	elif 'yeet' in ctx.content.lower():
+	elif re.match('yee[e]*t', ctx.content):
 		await ctx.add_reaction('\N{EYES}')
 	
 	await bot.process_commands(ctx)
