@@ -31,18 +31,13 @@ async def link(ctx, flag = 'bad'):
 	<arg> which link you want. Links are:
 	  api
 	  rl
-	  ?
-	  repo
-	  nests
-	  map (only works in ann arbor)'''
+	  repo'''
 	if flag == 'api':
 		await ctx.send('https://discordpy.readthedocs.io/en/latest/api.html')
 	elif flag == 'rl':
 		await ctx.send('https://www.twitch.tv/rocketleague')
 	elif flag == 'repo':
 		await ctx.send('https://github.com/Brigoon/DumbBot')
-	elif flag == 'nests':
-		await ctx.send('https://thesilphroad.com/atlas')
 	else:
 		await ctx.send('use \'/help link\' for valid links')
 
