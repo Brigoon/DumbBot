@@ -21,7 +21,7 @@ async def on_message(ctx):
 		await channel.send(ctx.content)
 	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
 		await ctx.delete()
-	elif re.match('yee[e]*t', ctx.content):
+	elif re.match('yee[e]*t', ctx.content.lower()):
 		await ctx.add_reaction('\N{EYES}')
 	
 	await bot.process_commands(ctx)
