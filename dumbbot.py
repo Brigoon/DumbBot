@@ -3,6 +3,7 @@ from helper import *
 client = discord.Client()
 bot_prefix = "/"
 bot = commands.Bot(command_prefix=bot_prefix)
+regexp = re.compile('yee[e]*t')
 
 @bot.event
 async def on_ready():
@@ -17,7 +18,7 @@ async def on_message(ctx):
 		await channel.send(ctx.content)
 	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
 		await ctx.delete()
-	elif re.match('yee[e]*t', ctx.content.lower()):
+	elif regexp.search(ctx.content.lower()):
 		await ctx.add_reaction('\N{EYES}')
 	
 	await bot.process_commands(ctx)
