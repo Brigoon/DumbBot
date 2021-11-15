@@ -2,6 +2,7 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import random
+import re
 
 client = discord.Client()
 bot_prefix = "/"
@@ -12,9 +13,18 @@ async def on_ready():
 	print("Bot Online!")
 
 @bot.event
-async def on_message(message):
-	print('{} said:\"{}\" in #{}'.format(message.author.name, message.content, message.channel.name))
-	await bot.process_commands(message)
+async def on_message(ctx):
+	print('{} said:\"{}\" in #{}'.format(ctx.author.name, ctx.content, ctx.channel.name))
+
+	if ctx.content.startswith('http') and ctx.author.id != 380935311540355072:
+		channel = bot.get_channel(380028343611031565)
+		await channel.send(ctx.content)
+	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
+		await ctx.delete()
+	elif re.match('yee[e]*t', ctx.content.lower()):
+		await ctx.add_reaction('\N{EYES}')
+	
+	await bot.process_commands(ctx)
 
 @bot.command()
 async def link(ctx, flag = 'bad'):
@@ -22,18 +32,13 @@ async def link(ctx, flag = 'bad'):
 	<arg> which link you want. Links are:
 	  api
 	  rl
-	  ?
-	  repo
-	  nests
-	  map (only works in ann arbor)'''
+	  repo'''
 	if flag == 'api':
 		await ctx.send('https://discordpy.readthedocs.io/en/latest/api.html')
 	elif flag == 'rl':
 		await ctx.send('https://www.twitch.tv/rocketleague')
 	elif flag == 'repo':
 		await ctx.send('https://github.com/Brigoon/DumbBot')
-	elif flag == 'nests':
-		await ctx.send('https://thesilphroad.com/atlas')
 	else:
 		await ctx.send('use \'/help link\' for valid links')
 
