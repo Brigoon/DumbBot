@@ -13,7 +13,7 @@ async def on_ready():
 async def on_message(ctx):
 	print('{} said:\"{}\" in #{}'.format(ctx.author.name, ctx.content, ctx.channel.name))
 
-	if ctx.content.startswith('http') and ctx.author.id != 380935311540355072:
+	if ctx.content.startswith('http') and ctx.author.id != 380935311540355072 and ctx.guild.id == 379321436478636034:
 		channel = bot.get_channel(380028343611031565)
 		await channel.send(ctx.content)
 	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
