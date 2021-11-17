@@ -15,7 +15,7 @@ async def on_message(ctx):
 	if ctx.author.id != 380935311540355072:
 
 		'''Print all messages into console'''
-		print('{} said:\"{}\" in #{}'.format(ctx.author.name, ctx.content, ctx.channel.name))
+		print(f'{ctx.author.name} said:\"{ctx.content}\" in #{ctx.channel.name}')
 
 		'''Paste any link sent in private server to the media channel'''
 		if ctx.content.startswith('http') and ctx.guild.id == 379321436478636034:
