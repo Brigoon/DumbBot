@@ -11,17 +11,30 @@ async def on_ready():
 
 @bot.event
 async def on_message(ctx):
-	print('{} said:\"{}\" in #{}'.format(ctx.author.name, ctx.content, ctx.channel.name))
+	'''Don't react to a message sent by the bot'''
+	if ctx.author.id != 380935311540355072:
 
-	if ctx.content.startswith('http') and ctx.author.id != 380935311540355072 and ctx.guild.id == 379321436478636034:
-		channel = bot.get_channel(380028343611031565)
-		await channel.send(ctx.content)
-	elif (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
-		await ctx.delete()
-	elif regexp.search(ctx.content.lower()):
-		await ctx.add_reaction('\N{EYES}')
-	
-	await bot.process_commands(ctx)
+		'''Print all messages into console'''
+		print('{} said:\"{}\" in #{}'.format(ctx.author.name, ctx.content, ctx.channel.name))
+
+		'''Paste any link sent in private server to the media channel'''
+		if ctx.content.startswith('http') and ctx.guild.id == 379321436478636034:
+			channel = bot.get_channel(380028343611031565)
+			await channel.send(ctx.content)
+
+		'''Delete any message that is not a link in the media channel'''
+		if (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
+			await ctx.delete()
+
+		'''Add the :eyes: reaction to every message containing the word yeet'''
+		if regexp.search(ctx.content.lower()):
+			await ctx.add_reaction('\N{EYES}')
+
+		'''Send a custom message whenever stipe is mentioned'''
+		if 'stipe' in ctx.content.lower():
+			await ctx.channel.send('Stipe is a nugget')
+		
+		await bot.process_commands(ctx)
 
 @bot.command()
 async def link(ctx, flag = 'bad'):
