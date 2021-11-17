@@ -50,16 +50,18 @@ async def link(ctx, flag = 'bad'):
 	elif flag == 'repo':
 		await ctx.send('https://github.com/Brigoon/DumbBot')
 	else:
-		await ctx.send('use \'/help link\' for valid links')
+		await ctx.send('Use \'/help link\' for valid links')
 
 @bot.command()
 async def bet(ctx, *args):
-	'''YOU WANNA BET??
-	<argn> nth bet string'''
+	'''Will randomly choose between at least 2 choices given.
+	If the choices include any spaces (aka, more than just a single word)
+	please surround them in quotes, ie:
+	/bet "This is option 1" "This is option 2"'''
 	if len(args) > 1:
 		await ctx.send(random.choice(args))
 	else:
-		await ctx.send('use \'/help bet\'')
+		await ctx.send('Need at least 2 inputs, use \'/help bet\'')
 
 """@bot.command()
 async def pokedex(ctx, name, gen, extra):
@@ -106,25 +108,13 @@ async def pokedex(ctx, name, gen, extra):
 	run_pokedex(ctx, name, gen, extra)"""
 
 @bot.command()
-async def nuke(ctx):
-	'''Only Brigoon can use this command
-	removes all messages of a channel'''
-	if ctx.author.id == 236886430616518666:
-		if ctx.channel.id == 381186197965373440:
-			await ctx.channel.purge(limit=100000000)
-		else:
-			await ctx.send('Wrong channel idiot')
-	else:
-		await ctx.send(ctx.author.id)
-
-@bot.command()
-async def clean(ctx, arg: int):
+async def clean(ctx, arg: int = 25):
 	'''Only Brigoon can use this command
 	<arg> is number of lines to remove'''
 	if ctx.author.id == 236886430616518666:
 		await ctx.channel.purge(limit=arg)
 	else:
-		await ctx.send(ctx.author.id)
+		await ctx.send('Only Brigoon can use this command')
 
 bot_ID_txt = open("text/bot_ID.txt","r")
 bot_ID = bot_ID_txt.read()
