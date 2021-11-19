@@ -20,8 +20,10 @@ async def run_weather(ctx, *args):
         await ctx.send("Oops, it looks like you entered more than 2 arguments, use 'help /weather'")
     else:
         try:
-            cidx = args[0].index(",")
-            arg1, arg2 = args[0].split(',')
+            comma_index = args[0].index(",")
+            args[0] = args[0][:comma_index]
+            if len(args) == 1:
+                args.extend(args[0][comma_index+1:])
         except ValueError:
             if len(args) == 1:
                 await ctx.send('Only one argument was entered. Please supply either: city,st or lat,lon.')
