@@ -12,11 +12,11 @@ async def on_ready():
 
 @bot.event
 async def on_message(ctx):
+	'''Print all messages into console'''
+	print(f'{ctx.author.name} said:\"{ctx.content}\" in #{ctx.channel.name}')
+
 	'''Don't react to a message sent by the bot'''
 	if ctx.author.id != 380935311540355072:
-
-		'''Print all messages into console'''
-		print(f'{ctx.author.name} said:\"{ctx.content}\" in #{ctx.channel.name}')
 
 		'''Paste any link sent in private server to the media channel'''
 		if ctx.content.startswith('http') and ctx.guild.id == 379321436478636034:
@@ -120,7 +120,7 @@ async def weather(ctx, *args):
 		If float, input is latitude/longitude coordinates. Latitude should be in positive
 		and longitude should be negative. If string, input is city which should have the format: city, st.
 	'''
-	run_weather(ctx, *args)
+	await run_weather(ctx, *args)
 
 @bot.command()
 async def clean(ctx, arg: int = 25):
