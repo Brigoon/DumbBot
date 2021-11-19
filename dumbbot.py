@@ -34,7 +34,7 @@ async def on_message(ctx):
 		'''Send a custom message whenever stipe is mentioned'''
 		if 'stipe' in ctx.content.lower():
 			await ctx.channel.send('Stipe is a nugget')
-		
+
 		await bot.process_commands(ctx)
 
 @bot.command()
@@ -84,7 +84,7 @@ async def pokedex(ctx, name, gen, extra):
 	  <arg1> register
 	  <arg2> name of registee
 	  example: /pokedex register brian'''
-	
+
 	'''
 	Possibly some useful stuff instead of opening loads of textfiles:
 	headers = ['approved','both_need','brian_dex','brian_need','jake_dex','jake_need',
@@ -107,6 +107,20 @@ async def pokedex(ctx, name, gen, extra):
 	'''
 
 	run_pokedex(ctx, name, gen, extra)"""
+
+@bot.command()
+async def weather(ctx, *args):
+	'''Command to retrieve an official National Weather Service forecast. Currently,
+	input can be either a city or exact latitude longitude coordinates. The next 6 timesteps
+	are then printed.
+
+	Arguments
+	---------
+	*args : string or float
+		If float, input is latitude/longitude coordinates. Latitude should be in positive
+		and longitude should be negative. If string, input is city which should have the format: city, st.
+	'''
+	run_weather(ctx, *args)
 
 @bot.command()
 async def clean(ctx, arg: int = 25):
