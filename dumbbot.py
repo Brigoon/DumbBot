@@ -1,4 +1,5 @@
 from helper import *
+from weather import *
 
 client = discord.Client()
 bot_prefix = "/"
