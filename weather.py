@@ -19,6 +19,7 @@ async def run_weather(ctx, *args):
     elif len(args) > 2:
         await ctx.send("Oops, it looks like you entered more than 2 arguments, use 'help /weather'")
     else:
+        args = list(args) #convert from tuple to list to support assignment
         try:
             comma_index = args[0].index(",")
             args[0] = args[0][:comma_index]
@@ -49,8 +50,6 @@ async def run_weather(ctx, *args):
         #FIXME: look into caching lat/lon pairs that may be input many times?
         #we can avoid 2 requests this way, allowing for slightly faster output
         #and worry less about rate limit
-
-        print(f'lat = {lat}, long = {lon}')
 
         page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
         if page.status_code != 200:
