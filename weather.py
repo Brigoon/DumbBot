@@ -55,6 +55,7 @@ async def run_weather(ctx, *args):
         page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
         if page.status_code != 200:
             await ctx.send(f'Something went wrong. For reference, the status code was: {page.status_code}. The NWS message was: {page.json()["detail"]}.')
+            return
         page = requests.get(page.json()['properties']['forecast'])
 
         dateValid = datetime.datetime.strptime(page.json()['properties']['updated'], '%Y-%m-%dT%H:%M:%S%z')
@@ -62,6 +63,6 @@ async def run_weather(ctx, *args):
         output = f"**Last Updated:** {dateValid.strftime('%A %d %B %Y %I:%M:%S%p')}\n"
 
         for i in page.json()['properties']['periods'][:6]:
-            output.append(f"**{i['name']}:** {i['detailedForecast']}\n")
+            output += f"**{i['name']}:** {i['detailedForecast']}\n"
 
         await ctx.send(output)
