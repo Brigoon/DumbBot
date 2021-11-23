@@ -66,8 +66,8 @@ async def bet(ctx, *args):
 		await ctx.send('Need at least 2 inputs, use \'/help bet\'')
 
 @bot.command()
-async def herald(ctx, *link):
-	await runHerald(ctx, link)
+async def herald(ctx, *args):
+	await runHerald(ctx, args)
 
 @bot.command()
 async def weather(ctx, *args):
