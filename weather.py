@@ -1,5 +1,6 @@
 from helper import *
 import requests
+import datetime
 
 client = discord.Client()
 bot_prefix = "/"
@@ -15,7 +16,7 @@ def _floatConvert(value):
 @bot.command()
 async def run_weather(ctx, *args):
     if len(args) == 0:
-        await ctx.send("Need at least one input, use 'help /weather'")
+        await ctx.send("Need to enter some geospatial location, use 'help /weather'")
     elif len(args) > 2:
         await ctx.send("Oops, it looks like you entered more than 2 arguments, use 'help /weather'")
     else:
@@ -54,7 +55,14 @@ async def run_weather(ctx, *args):
         page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
         if page.status_code != 200:
             await ctx.send(f'Something went wrong. For reference, the status code was: {page.status_code}. The NWS message was: {page.json()["detail"]}.')
+            return
         page = requests.get(page.json()['properties']['forecast'])
 
+        dateValid = datetime.datetime.strptime(page.json()['properties']['updated'], '%Y-%m-%dT%H:%M:%S%z')
+
+        output = f"**Last Updated:** {dateValid.strftime('%A %d %B %Y %I:%M:%S%p')}\n"
+
         for i in page.json()['properties']['periods'][:6]:
-            await ctx.send(f"{i['name']}: {i['detailedForecast']}")
+            output += f"**{i['name']}:** {i['detailedForecast']}\n"
+
+        await ctx.send(output)
