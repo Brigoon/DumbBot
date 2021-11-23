@@ -1,5 +1,7 @@
+from discord import channel
 from helper import *
 from weather import *
+from herald import *
 
 client = discord.Client()
 bot_prefix = "/"
@@ -37,6 +39,13 @@ async def on_message(ctx):
 
 		await bot.process_commands(ctx)
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+	if ( member.id != 380935311540355072
+		 and not before.channel
+		 and after.channel ):
+		await playHerald(member)
+
 @bot.command()
 async def link(ctx, flag = 'bad'):
 	'''Provides the link desired
@@ -64,49 +73,19 @@ async def bet(ctx, *args):
 	else:
 		await ctx.send('Need at least 2 inputs, use \'/help bet\'')
 
-"""@bot.command()
-async def pokedex(ctx, name, gen, extra):
-	'''Shows which Pokemon the user still needs to catch
-	<arg1>:
-	  brian: shows Brians needed pokemon
-	  ty: shows Tys needed pokemon
-	  both: shows what both Ty and Brian do not have
-	  example: /pokedex brian
-	<arg1> <arg2>:
-	  <arg1> same as previous
-	  <arg2> generation to be shown
-	  example: /pokedex brian 1
-	<arg1> <arg2>: adds a pokemon to the pokedex
-	  <arg1> same as previous
-	  <arg2> name of pokemon to be added
-	  example: /pokedex brian bulbasaur
-	<arg1> <arg2>: registers a new user
-	  <arg1> register
-	  <arg2> name of registee
-	  example: /pokedex register brian'''
+@bot.command()
+async def herald(ctx, *args):
+	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube 
+	link and from there you can change how long Herald will play the audio as well as what time in 
+	the audio it will start (example, a music video with a bunch of junk for the first 15 seconds).
+	
+	Arguments
+	---------
+	<link> :                        The YouTube link for you desired audio
+	duration <time in seconds> :    How long you would like your audio to be played
+	start <start time in seconds> : When you would like the audio to start'''
 
-	'''
-	Possibly some useful stuff instead of opening loads of textfiles:
-	headers = ['approved','both_need','brian_dex','brian_need','jake_dex','jake_need',
-	          'gen1','gen2','gen3','ty_dex','ty_need']
-	path = r'C:\\Users\\Ty Dickinson\\DumbBot\\text'
-	all_files = glob.glob(os.path.join(path, "*.txt"))
-	list_of_dfs = [pd.read_csv(f,header=None) for f in all_files]
-	combined_df = pd.concat(list_of_dfs, ignore_index=True,axis=1)
-	combined_df.columns = headers
-
-	combined_df.approved returns just the approved column.
-	Since some files are longer than others, use .dropna() to only return
-	data in the file. Another function that may be useful is .tolist().
-
-	For example, you can replace dex = [dex1,dex2,dex3] with
-	dex = combined_df.gen1.dropna().tolist() + combined_df.gen2.dropna().tolist() + combined_df.gen3.dropna().tolist()
-
-	Since when someone adds a new pokemon, it is written to the textfile, it will be added to the combined_df
-	the next time pokedex is called.
-	'''
-
-	run_pokedex(ctx, name, gen, extra)"""
+	await runHerald(ctx, args)
 
 @bot.command()
 async def weather(ctx, *args):
