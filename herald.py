@@ -41,21 +41,15 @@ async def runHerald(ctx, args):
 
         if ctx.author.id in heraldDict.keys():
             # User exists
-            heraldDict[ctx.author.id].duration = float(args[1])
-            await ctx.send("Herald duration updated")
-        else:
-            # User does NOT exist so they need to first pick their audio
-            await ctx.send("You do not have a chosen audio, run /herald link")
-            return
+            duration = float(args[1])
 
-    elif len(args) == 2 and args[0] == 'start':
-        # If there are two arguments and the first is 'start' then the user is
-        # trying to update the start time of their audio
-
-        if ctx.author.id in heraldDict.keys():
-            # User exists
-            heraldDict[ctx.author.id].startTime = args[1]
-            await ctx.send("Herald start time updated")
+            # Duration cannot be greater than 30
+            if duration <= 30:
+                heraldDict[ctx.author.id].duration = duration
+                await ctx.send("Herald duration updated")
+            else:
+                await ctx.send("Duration must be less than or equal to 30 seconds")
+                return
         else:
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
@@ -68,10 +62,20 @@ async def runHerald(ctx, args):
     pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
 
 async def playHerald(member):
+
+    # Only run if user has selected audio
     if member.id in heraldDict.keys():
+
+        # Connect to voice channel
         vc = await member.voice.channel.connect()
+
+        # Set and start audio
         audio = FFmpegPCMAudio(heraldDict[member.id].mp3Link)
         vc.play(audio)
+
+        # Wait for duration
         time.sleep(heraldDict[member.id].duration)
+
+        # Stop and disconnect when done
         vc.stop()
         await vc.disconnect()
