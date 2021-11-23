@@ -17,7 +17,12 @@ async def runHerald(ctx, *args):
         # If there is just a single argument then that argument must be a link
 
         # Download audio
-        video = YouTube(args[0][0])
+        try:
+            video = YouTube(args[0][0])
+        except:
+            await ctx.send("Not a valid YouTube link")
+            return
+        
         stream = video.streams.filter(only_audio = True).first()
         stream.download("herald", filename = f'{ctx.author.id}_audio.mp3')
 

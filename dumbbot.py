@@ -67,6 +67,16 @@ async def bet(ctx, *args):
 
 @bot.command()
 async def herald(ctx, *args):
+	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube 
+	link and from there you can change how long Herald will play the audio as well as what time in 
+	the audio it will start (example, a music video with a bunch of junk for the first 15 seconds).
+	
+	Arguments
+	---------
+	<link> :                        The YouTube link for you desired audio
+	duration <time in seconds> :    How long you would like your audio to be played
+	start <start time in seconds> : When you would like the audio to start'''
+	
 	await runHerald(ctx, args)
 
 @bot.command()
