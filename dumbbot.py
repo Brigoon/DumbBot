@@ -1,3 +1,4 @@
+from discord import channel
 from helper import *
 from weather import *
 from herald import *
@@ -38,6 +39,13 @@ async def on_message(ctx):
 
 		await bot.process_commands(ctx)
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+	if ( member.id != 380935311540355072
+		 and not before.channel
+		 and after.channel ):
+		await playHerald(member)
+
 @bot.command()
 async def link(ctx, flag = 'bad'):
 	'''Provides the link desired
@@ -76,7 +84,7 @@ async def herald(ctx, *args):
 	<link> :                        The YouTube link for you desired audio
 	duration <time in seconds> :    How long you would like your audio to be played
 	start <start time in seconds> : When you would like the audio to start'''
-	
+
 	await runHerald(ctx, args)
 
 @bot.command()
