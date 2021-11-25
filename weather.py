@@ -1,6 +1,7 @@
 from helper import *
 import requests
 import datetime
+import pytz
 import io
 import matplotlib.pyplot as plt
 
@@ -55,12 +56,14 @@ async def run_weather(ctx, *args):
         #and worry less about rate limit
 
         page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
+        timeZone = pytz.timezone(page.json()['properties']['timeZone'])
         if page.status_code != 200:
             await ctx.send(f'Something went wrong. For reference, the status code was: {page.status_code}. The NWS message was: {page.json()["detail"]}.')
             return
         page = requests.get(page.json()['properties']['forecast'])
 
         dateValid = datetime.datetime.strptime(page.json()['properties']['updated'], '%Y-%m-%dT%H:%M:%S%z')
+        dateValid = dateValid.astimezone(timeZone)
 
         output = f"**Last Updated:** {dateValid.strftime('%A %d %B %Y %I:%M:%S%p')}\n"
 
