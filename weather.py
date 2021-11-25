@@ -16,6 +16,20 @@ def _floatConvert(value):
         pass
     return value
 
+def _getLocation():
+    return
+
+def _savePlot(plot):
+    data_stream = io.BytesIO()
+    plot.savefig(data_stream, bbox_inches='tight', format='png', dpi=100)
+    plt.close()
+
+    data_stream.seek(0)
+    pic = discord.File(data_stream,filename="fig.png")
+    embed = discord.Embed(title="Title", description="Desc", color=0xeddce0)
+    embed.set_image(url='attachment://fig.png')
+    return pic, embed
+
 @bot.command()
 async def run_weather(ctx, *args):
     if len(args) == 0:
@@ -71,21 +85,51 @@ async def run_weather(ctx, *args):
             output += f"**{i['name']}:** {i['detailedForecast']}\n"
 
         await ctx.send(output)
+        return
 
 @bot.command()
 async def make_plot(ctx):
-    data_stream = io.BytesIO()
+    lat = 42.626023
+    lon = -83.945811
 
-    fig = plt.figure()
-    plt.plot([1,2,3], [1,2,3])
-    plt.xlabel('x-axis')
-    plt.ylabel('y-axis')
-    plt.savefig(data_stream, bbox_inches='tight', format='png', dpi=100)
-    plt.close()
+    page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
+    page = requests.get(page.json()['properties']['forecastHourly'])
+    forecastInfo = page.json()['properties']['periods']
 
-    data_stream.seek(0)
-    pic = discord.File(data_stream,filename="test.png")
-    embed = discord.Embed(title="Title", description="Desc", color=0x00ff00)
-    embed.set_image(url='attachment://test.png')
+    temps = []
+    dates = []
+    for i in range(12):
+        temps.append(forecastInfo[i]['temperature'])
+        dates.append(datetime.datetime.strptime(forecastInfo[i]['startTime'], '%Y-%m-%dT%H:%M:%S%z'))
+
+    dayOfWeek = [i.strftime('%A') for i in dates]
+    timeOfDay = [i.strftime('%I') for i in dates]
+    xticks = range(len(temps))
+
+    #get min/max and round down/up to multiple of 5
+    minTemp = min(temps)
+    maxTemp = max(temps)
+    minTemp = minTemp - (minTemp % 5)
+    maxTemp = maxTemp + (5 - (maxTemp % 5))
+    yticks = range(minTemp, maxTemp+1, 1)
+
+    fig = plt.figure(figsize=(10,5))
+    ax = fig.add_subplot(1,1,1)
+    plt.plot(xticks, temps, color='r', linestyle='-', marker='.', markersize=15)
+    plt.xticks(ticks=xticks, labels=timeOfDay)
+    plt.yticks(ticks=yticks)
+    if len(set(dayOfWeek)) > 1:
+        indexOfMidnight = timeOfDay.index('12')
+        axesXLoc, _ = ax.transLimits.transform((indexOfMidnight, temps[0]))
+        plt.axvline(x=indexOfMidnight, color='k', linestyle='--')
+        plt.text(x=axesXLoc, y=1.0, s=dayOfWeek[indexOfMidnight], transform=ax.transAxes)
+    plt.xlabel('Hour (12-h format)')
+    plt.ylabel(r'Temperature $^\circ$F')
+
+    plt.text(x=0.0, y=1.0, s=dayOfWeek[0], transform=ax.transAxes)
+    plt.grid()
+    plt.show()
+
+    pic, embed = _savePlot(fig)
     await ctx.send(file=pic, embed=embed)
     return
