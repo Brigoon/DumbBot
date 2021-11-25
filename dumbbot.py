@@ -75,10 +75,10 @@ async def bet(ctx, *args):
 
 @bot.command()
 async def herald(ctx, *args):
-	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube 
-	link and from there you can change how long Herald will play the audio as well as what time in 
+	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube
+	link and from there you can change how long Herald will play the audio as well as what time in
 	the audio it will start (example, a music video with a bunch of junk for the first 15 seconds).
-	
+
 	Arguments
 	---------
 	<link> :                        The YouTube link for you desired audio
@@ -100,6 +100,13 @@ async def weather(ctx, *args):
 		and longitude should be negative. If string, input is city which should have the format: city, st.
 	'''
 	await run_weather(ctx, *args)
+
+@bot.command()
+async def plot(ctx):
+	'''
+	'''
+	await make_plot(ctx)
+
 
 @bot.command()
 async def clean(ctx, arg: int = 25):

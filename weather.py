@@ -1,6 +1,8 @@
 from helper import *
 import requests
 import datetime
+import io
+import matplotlib.pyplot as plt
 
 client = discord.Client()
 bot_prefix = "/"
@@ -66,3 +68,21 @@ async def run_weather(ctx, *args):
             output += f"**{i['name']}:** {i['detailedForecast']}\n"
 
         await ctx.send(output)
+
+@bot.command()
+async def make_plot(ctx):
+    data_stream = io.BytesIO()
+
+    fig = plt.figure()
+    plt.plot([1,2,3], [1,2,3])
+    plt.xlabel('x-axis')
+    plt.ylabel('y-axis')
+    plt.savefig(data_stream, bbox_inches='tight', format='png', dpi=100)
+    plt.close()
+
+    data_stream.seek(0)
+    pic = discord.File(data_stream,filename="test.png")
+    embed = discord.Embed(title="Title", description="Desc", color=0x00ff00)
+    embed.set_image(url='attachment://test.png')
+    await ctx.send(file=pic, embed=embed)
+    return
