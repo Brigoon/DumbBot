@@ -25,7 +25,7 @@ async def runHerald(ctx, args):
         try:
             video = YouTube(args[0])
         except:
-            await ctx.send("Not a valid YouTube link")
+            await ctx.send("Not a valid YouTube link, run /herald link")
             return
 
         # Video cannot be longer than 10 minutes
@@ -118,6 +118,11 @@ async def runHerald(ctx, args):
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
             return
+
+    elif len(args) == 2:
+        # user used a flag that does not exist
+        await ctx.send(f"Herald does not have a flag for '{args[0]}', run /herald link")
+        return
 
     else:
         await ctx.send("A link is needed, run /herald link")
