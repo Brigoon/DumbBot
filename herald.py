@@ -131,7 +131,6 @@ async def runHerald(ctx, args):
         return
 
     pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
-    return
 
 async def playHerald(member):
 
@@ -140,8 +139,9 @@ async def playHerald(member):
 
         current_time = datetime.datetime.now()
 
-        #only run if user has never joined voice channel or the time between joining exceeds delay
-        if (isinstance(heraldDict[member.id], type(None))) or ((current_time - heraldDict[member.id].lastUseTime).total_seconds() > wait_timer):
+        # Only run if user has never joined voice channel or the time between joining exceeds delay
+        if (isinstance(heraldDict[member.id].lastUseTime, type(None))) or \
+            ((current_time - heraldDict[member.id].lastUseTime).total_seconds() > wait_timer):
 
             print(f'{member.name} has played Herald!')
 
@@ -164,8 +164,4 @@ async def playHerald(member):
             vc.stop()
             await vc.disconnect()
 
-        else:
-            pass
-
-    pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
-    return
+            pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
