@@ -2,12 +2,14 @@ from helper import *
 from pytube import YouTube
 from pydub import AudioSegment
 import pickle
+import datetime
 
 default_duration = 15
 millisecond_conversion = 1000
+wait_timer = 0
 
 class HeraldUser:
-    def __init__(self, mp3Link_in, startTime_in = 0, lastUseTime_in = 0, duration_in = default_duration, audioLength_in = 0):
+    def __init__(self, mp3Link_in, startTime_in = 0, lastUseTime_in = None, duration_in = default_duration, audioLength_in = 0):
         self.mp3Link = mp3Link_in
         self.editedMp3Link = mp3Link_in
         self.startTime = startTime_in
@@ -32,7 +34,7 @@ async def runHerald(ctx, args):
         if video.length > 600:
             await ctx.send("Video is too long (greater than 10 minutes)")
             return
-        
+
         stream = video.streams.filter(only_audio = True).first()
         stream.download("herald", filename = f'{ctx.author.id}.mp3')
 
@@ -113,7 +115,7 @@ async def runHerald(ctx, args):
                 await ctx.send("The start time requested is beyond the end of the audio")
                 return
 
-        
+
         else:
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
@@ -135,20 +137,31 @@ async def playHerald(member):
     # Only run if user has selected audio
     if member.id in heraldDict.keys():
 
-        print(f'{member.name} has played Herald!')
+        current_time = datetime.datetime.now()
 
-        # Connect to voice channel
-        time.sleep(0.5)
-        vc = await member.voice.channel.connect()
+        # Only run if user has never joined voice channel or the time between joining exceeds delay
+        if (isinstance(heraldDict[member.id].lastUseTime, type(None))) or \
+            ((current_time - heraldDict[member.id].lastUseTime).total_seconds() > wait_timer):
 
-        # Set and start audio
-        audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
-        time.sleep(0.5)
-        vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
+            print(f'{member.name} has played Herald!')
 
-        # Wait for duration
-        time.sleep(heraldDict[member.id].duration)
+            #set current time to use for future vc joins
+            heraldDict[member.id].lastUseTime = current_time
 
-        # Stop and disconnect when done
-        vc.stop()
-        await vc.disconnect()
+            # Connect to voice channel
+            time.sleep(0.5)
+            vc = await member.voice.channel.connect()
+
+            # Set and start audio
+            audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
+            time.sleep(0.5)
+            vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
+
+            # Wait for duration
+            time.sleep(heraldDict[member.id].duration)
+
+            # Stop and disconnect when done
+            vc.stop()
+            await vc.disconnect()
+
+            pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
