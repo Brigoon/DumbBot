@@ -27,6 +27,11 @@ async def runHerald(ctx, args):
         except:
             await ctx.send("Not a valid YouTube link")
             return
+
+        # Video cannot be longer than 10 minutes
+        if video.length > 600:
+            await ctx.send("Video is too long (greater than 10 minutes)")
+            return
         
         stream = video.streams.filter(only_audio = True).first()
         stream.download("herald", filename = f'{ctx.author.id}.mp3')
@@ -71,9 +76,11 @@ async def runHerald(ctx, args):
 
             else:
                 await ctx.send("Duration must be less than or equal to 30 seconds")
+                return
         else:
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
+            return
 
     elif len(args) == 2 and args[0] == 'start':
         # If there are two arguments and the first is 'start' then the user is
@@ -99,14 +106,18 @@ async def runHerald(ctx, args):
                 if (heraldDict[ctx.author.id].audioLength - start_time) < heraldDict[ctx.author.id].duration:
                     heraldDict[ctx.author.id].duration = heraldDict[ctx.author.id].audioLength - start_time
 
+                await ctx.send("Start time updated")
+
             else:
                 # The start time is greater than the length of the audio
                 await ctx.send("The start time requested is beyond the end of the audio")
+                return
 
         
         else:
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
+            return
 
     else:
         await ctx.send("A link is needed, run /herald link")
