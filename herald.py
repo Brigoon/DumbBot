@@ -66,11 +66,15 @@ async def playHerald(member):
     # Only run if user has selected audio
     if member.id in heraldDict.keys():
 
+        print(f'{member.name} has played Herald!')
+
         # Connect to voice channel
+        time.sleep(0.5)
         vc = await member.voice.channel.connect()
 
         # Set and start audio
         audio = FFmpegPCMAudio(heraldDict[member.id].mp3Link)
+        time.sleep(0.5)
         vc.play(audio)
 
         # Wait for duration
