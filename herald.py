@@ -2,7 +2,6 @@ from helper import *
 from pytube import YouTube
 from pydub import AudioSegment
 import pickle
-from discord import FFmpegPCMAudio
 
 default_duration = 15
 millisecond_conversion = 1000
@@ -48,6 +47,7 @@ async def runHerald(ctx, args):
             heraldDict[ctx.author.id].duration = default_duration
 
         heraldDict[ctx.author.id].audioLength = video.length
+        heraldDict[ctx.author.id].startTime = 0
         heraldDict[ctx.author.id].editedMp3Link = heraldDict[ctx.author.id].mp3Link
 
     elif len(args) == 2 and args[0] == 'duration':
@@ -60,7 +60,7 @@ async def runHerald(ctx, args):
 
             # Duration cannot be greater than 30
             if duration <= 30:
-                
+
                 # Duration cannot extend past the end of the audio so we adjust here
                 if duration > heraldDict[ctx.author.id].audioLength - heraldDict[ctx.author.id].startTime:
                     heraldDict[ctx.author.id].duration = heraldDict[ctx.author.id].audioLength - heraldDict[ctx.author.id].startTime
@@ -91,9 +91,6 @@ async def runHerald(ctx, args):
 
                 # Create a new audio that starts at the desired time
                 edited_audio = audio[start_time*millisecond_conversion:]
-
-                # Reduce volume by 3 dB
-                edited_audio = edited_audio - 3
 
                 edited_audio.export(f'herald/{ctx.author.id}_edited.mp3', format='mp3')
                 heraldDict[ctx.author.id].editedMp3Link = f'herald/{ctx.author.id}_edited.mp3'
@@ -129,9 +126,9 @@ async def playHerald(member):
         vc = await member.voice.channel.connect()
 
         # Set and start audio
-        audio = FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
+        audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
         time.sleep(0.5)
-        vc.play(audio)
+        vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
 
         # Wait for duration
         time.sleep(heraldDict[member.id].duration)
