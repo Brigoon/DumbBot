@@ -3,8 +3,10 @@ from pytube import YouTube
 import pickle
 from discord import FFmpegPCMAudio
 
+default_duration = 15
+
 class HeraldUser:
-    def __init__(self, mp3Link_in, lastUseTime_in = 0, startTime_in = 0, duration_in = 15):
+    def __init__(self, mp3Link_in, lastUseTime_in = 0, startTime_in = 0, duration_in = default_duration):
         self.mp3Link = mp3Link_in
         self.lastUseTime = lastUseTime_in
         self.startTime = startTime_in
@@ -34,6 +36,12 @@ async def runHerald(ctx, args):
             # New user
             heraldDict[ctx.author.id] = HeraldUser(f'herald/{ctx.author.id}_audio.mp3')
             await ctx.send("User initialized with new Herald")
+
+        # Ensure the playback does not last longer than possible
+        if video.length < default_duration:
+            heraldDict[ctx.author.id].duration = video.length
+        else:
+            heraldDict[ctx.author.id].duration = default_duration
 
     elif len(args) == 2 and args[0] == 'duration':
         # If there are two arguments and the first is 'duration' then the user is
