@@ -1,4 +1,3 @@
-import inspect
 import pickle
 import herald
 
