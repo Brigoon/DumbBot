@@ -18,11 +18,25 @@ class HeraldUser:
         self.audioLength = audioLength_in
         self.status = status_in
 
+    @property
+    def status(self):
+        return self.__status
+
+    @status.setter
+    def status(self, val):
+        if val.lower() == 'on':
+            self.status = True
+        elif val.lower() == 'off':
+            self.status = False
+        else:
+            raiseError(msg='Status must be either on or off.')
+        return
+
 heraldDict = pickle.load(open("herald/heraldUsers.p", "rb"))
 
 async def runHerald(ctx, args):
-    if len(args) == 1 and 'youtube' in args[0]:
-        # If there is just a single argument and the word youtube is in it, that argument must be a link
+    if len(args) == 1:
+        # If there is just a single argument then that argument must be a link
 
         # Download audio
         try:
@@ -57,14 +71,7 @@ async def runHerald(ctx, args):
         heraldDict[ctx.author.id].audioLength = video.length
         heraldDict[ctx.author.id].startTime = 0
         heraldDict[ctx.author.id].editedMp3Link = heraldDict[ctx.author.id].mp3Link
-
-    elif len(args) == 1 and args[0].lower() in ['on', 'off']:
-        # Turn status on/off based on user input
-        heraldDict[ctx.author.id].status = args[0].lower()
-
-    elif len(args == 1):
-        await ctx.send(f"Herald does not have a flag for '{args[0]}', run /herald link")
-        return
+        heraldDict[ctx.author.id].status = 'on'
 
     elif len(args) == 2 and args[0] == 'duration':
         # If there are two arguments and the first is 'duration' then the user is
@@ -83,6 +90,7 @@ async def runHerald(ctx, args):
                 else:
                     heraldDict[ctx.author.id].duration = duration
 
+                heraldDict[ctx.author.id].status = 'on'
                 await ctx.send("Herald duration updated")
 
             else:
@@ -117,6 +125,7 @@ async def runHerald(ctx, args):
                 if (heraldDict[ctx.author.id].audioLength - start_time) < heraldDict[ctx.author.id].duration:
                     heraldDict[ctx.author.id].duration = heraldDict[ctx.author.id].audioLength - start_time
 
+                heraldDict[ctx.author.id].status = 'on'
                 await ctx.send("Start time updated")
 
             else:
@@ -129,6 +138,10 @@ async def runHerald(ctx, args):
             # User does NOT exist so they need to first pick their audio
             await ctx.send("You do not have a chosen audio, run /herald link")
             return
+
+    elif len(args) == 2 and args[0] == 'status':
+        # Turn status on/off based on user input
+        heraldDict[ctx.author.id].status = args[0].lower()
 
     elif len(args) == 2:
         # user used a flag that does not exist
@@ -144,7 +157,7 @@ async def runHerald(ctx, args):
 async def playHerald(member):
 
     # Only run if user has selected audio andf status is turned on
-    if member.id in heraldDict.keys() and heraldDict[member.id].status == 'on':
+    if member.id in heraldDict.keys() and heraldDict[member.id].status:
 
         current_time = datetime.datetime.now()
 
