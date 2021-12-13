@@ -25,3 +25,5 @@ else:
         for a in attributes_to_add:
             #update user data using default value
             newHeraldDict[u].__setattr__(a, dummy_user.__getattribute__(a))
+
+pickle.dump(newHeraldDict, open("herald/heraldUsers.p", "wb"))
