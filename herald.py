@@ -129,10 +129,12 @@ async def runHerald(ctx, args):
         # Turn status on/off based on user input
         if args[1].lower() == 'on':
             heraldDict[ctx.author.id].status = True
+            await ctx.send("Your Herald will now play when you join a voice channel")
         elif args[1].lower() == 'off':
             heraldDict[ctx.author.id].status = False
+            await ctx.send("Your Herald will no longer play when you join a voice channel")
         else:
-            await ctx.send("status must be either on or off")
+            await ctx.send("Status must be either on or off")
             return
 
     elif len(args) == 2:
