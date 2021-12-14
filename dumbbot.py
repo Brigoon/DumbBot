@@ -34,12 +34,16 @@ async def on_message(ctx):
 		if regexp_yeet.search(ctx.content.lower()):
 			await ctx.add_reaction('\N{EYES}')
 
+		'''Add the sheesh reaction to every message containing the word sheesh'''
 		if regexp_sheesh.search(ctx.content.lower()):
 			await ctx.add_reaction('<:sheesh:918963217722667038>')
 
 		'''Send a custom message whenever stipe is mentioned'''
 		if 'stipe' in ctx.content.lower():
 			await ctx.channel.send('Stipe is a nugget')
+
+		if ctx.content.lower() == 'ratio':
+			await ctx.channel.send("+ you fell off + didn't ask")
 
 		await bot.process_commands(ctx)
 
@@ -79,10 +83,10 @@ async def bet(ctx, *args):
 
 @bot.command()
 async def herald(ctx, *args):
-	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube 
-	link and from there you can change how long Herald will play the audio as well as what time in 
+	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube
+	link and from there you can change how long Herald will play the audio as well as what time in
 	the audio it will start (example, a music video with a bunch of junk for the first 15 seconds).
-	
+
 	Arguments
 	---------
 	<link> :                        The YouTube link for you desired audio
