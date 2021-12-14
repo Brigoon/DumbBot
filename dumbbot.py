@@ -6,7 +6,8 @@ from herald import *
 client = discord.Client()
 bot_prefix = "/"
 bot = commands.Bot(command_prefix=bot_prefix)
-regexp = re.compile('yee[e]*t')
+regexp_yeet = re.compile('yee[e]*t')
+regexp_sheesh = re.compile('shee[e]*sh')
 
 @bot.event
 async def on_ready():
@@ -30,12 +31,19 @@ async def on_message(ctx):
 			await ctx.delete()
 
 		'''Add the :eyes: reaction to every message containing the word yeet'''
-		if regexp.search(ctx.content.lower()):
+		if regexp_yeet.search(ctx.content.lower()):
 			await ctx.add_reaction('\N{EYES}')
+
+		'''Add the sheesh reaction to every message containing the word sheesh'''
+		if regexp_sheesh.search(ctx.content.lower()):
+			await ctx.add_reaction('<:sheesh:918963217722667038>')
 
 		'''Send a custom message whenever stipe is mentioned'''
 		if 'stipe' in ctx.content.lower():
 			await ctx.channel.send('Stipe is a nugget')
+
+		if ctx.content.lower() == 'ratio':
+			await ctx.channel.send("+ you fell off + didn't ask")
 
 		await bot.process_commands(ctx)
 
