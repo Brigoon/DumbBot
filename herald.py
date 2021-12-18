@@ -174,7 +174,7 @@ async def playHerald(member):
             vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
 
             # Wait for duration
-            time.sleep(heraldDict[member.id].duration)
+            await asyncio.sleep(heraldDict[member.id].duration)
 
             # Stop and disconnect when done
             vc.stop()
