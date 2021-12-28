@@ -1,5 +1,5 @@
 from helper import *
-import requests
+import aiohttp
 import datetime
 import pytz
 
@@ -14,7 +14,19 @@ def _floatConvert(value):
         pass
     return value
 
-@bot.command()
+async def _makeAPICall(ctx, url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            status = resp.status
+            page = await resp.json()
+    if status == 200:
+        return page
+    elif status == 500:
+        await _makeAPICall(ctx, url)
+    else:
+        await ctx.send(f'Something went wrong. For reference, the status code was: {status}. The NWS message was: {page["detail"]}.')
+        return None
+
 async def run_weather(ctx, *args):
     if len(args) == 0:
         await ctx.send("Need to enter some geospatial location, use 'help /weather'")
@@ -53,19 +65,23 @@ async def run_weather(ctx, *args):
         #we can avoid 2 requests this way, allowing for slightly faster output
         #and worry less about rate limit
 
-        page = requests.get(f'https://api.weather.gov/points/{lat},{lon}')
-        timeZone = pytz.timezone(page.json()['properties']['timeZone'])
-        if page.status_code != 200:
-            await ctx.send(f'Something went wrong. For reference, the status code was: {page.status_code}. The NWS message was: {page.json()["detail"]}.')
-            return
-        page = requests.get(page.json()['properties']['forecast'])
+        page = await _makeAPICall(ctx, f'https://api.weather.gov/points/{lat},{lon}')
 
-        dateValid = datetime.datetime.strptime(page.json()['properties']['updated'], '%Y-%m-%dT%H:%M:%S%z')
+        if page is None:
+            return
+
+        timeZone = pytz.timezone(page['properties']['timeZone'])
+        forecast = await _makeAPICall(ctx, page['properties']['forecast'])
+
+        if forecast is None:
+            return
+
+        dateValid = datetime.datetime.strptime(forecast['properties']['updated'], '%Y-%m-%dT%H:%M:%S%z')
         dateValid = dateValid.astimezone(timeZone)
 
         output = f"**Last Updated:** {dateValid.strftime('%A %d %B %Y %I:%M:%S%p')}\n"
 
-        for i in page.json()['properties']['periods'][:6]:
+        for i in forecast['properties']['periods'][:6]:
             output += f"**{i['name']}:** {i['detailedForecast']}\n"
 
         await ctx.send(output)
