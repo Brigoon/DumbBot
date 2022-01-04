@@ -159,25 +159,28 @@ async def playHerald(member):
         if (isinstance(heraldDict[member.id].lastUseTime, type(None))) or \
             ((current_time - heraldDict[member.id].lastUseTime).total_seconds() > wait_timer):
 
-            print(f'{member.name} has played Herald!')
-
-            #set current time to use for future vc joins
-            heraldDict[member.id].lastUseTime = current_time
-
-            # Connect to voice channel
             time.sleep(0.5)
-            vc = await member.voice.channel.connect()
+            try:
+                # Connect to voice channel
+                vc = await member.voice.channel.connect()
 
-            # Set and start audio
-            audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
-            time.sleep(0.5)
-            vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
+                #set current time to use for future vc joins
+                heraldDict[member.id].lastUseTime = current_time
 
-            # Wait for duration
-            await asyncio.sleep(heraldDict[member.id].duration)
+                # Set and start audio
+                audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
+                time.sleep(0.5)
+                vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
 
-            # Stop and disconnect when done
-            vc.stop()
-            await vc.disconnect()
+                print(f'{member.name} has played Herald!')
 
-            pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
+                # Wait for duration
+                await asyncio.sleep(heraldDict[member.id].duration)
+
+                # Stop and disconnect when done
+                vc.stop()
+                await vc.disconnect()
+
+                pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
+            except:
+                return

@@ -49,9 +49,11 @@ async def on_message(ctx):
 
 @bot.event
 async def on_voice_state_update(member, before, after):
+	'''Check that the bot is not the user connecting
+		AND the user has entered a new voice channels
+		AND the bot is not already in the voice channel'''
 	if ( member.id != 380935311540355072
-		 and not before.channel
-		 and after.channel ):
+	     and before.channel != after.channel):
 		await playHerald(member)
 
 @bot.command()
