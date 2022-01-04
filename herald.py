@@ -184,4 +184,3 @@ async def playHerald(member):
                 pickle.dump(heraldDict, open("herald/heraldUsers.p", "wb"))
             except:
                 return
-                
