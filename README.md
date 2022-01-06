@@ -1,6 +1,6 @@
 # Dumb Bot
 
-This is a project that started as a way for me to learn Python. I also thought it would be fun to mess around with a Pokedex tracker for keeping track of what you still need in PokemonGo. That is now it's primary use.
+This is a project that started as a way for me to learn Python but has turned into a fun way to interact with friends.
 
 ## Usage
 
@@ -28,27 +28,30 @@ You can also use it to see specific commands:
 /help <command>
 ```
 
-### pokedex
+### herald
 
-This command will keep track of and update your personal Pokemon Go pokedex. To get started use the 'register' command:
+Herald allows you to control an intro audio (from YouTube) that will play whenever you join a voice channel (this can be configured to have a timer to make sure it doesn't get spammed).
+To set an audio, use the 'herald' command:
 ```
-/pokedex register <username>
-```
-
-After you have registered your name, you can add pokemon using the following syntax:
-```
-/pokedex <username> <pokemon>
+/herald <link to youtube video>
 ```
 
-To view what you still need:
+The duration and start time can also be controlled:
 ```
-/pokedex <username>
+/herald duration <time between 0 and 30 seconds>
+/herald start <time between 0 and end of video>
 ```
-###### NOTE: If you have not added enough Pokemon to your Pokedex, this will not work, as Discord only allows up to 2000 characters to be printed per message.
 
-To view what you still need within a specific generation:
+Herald can be turned on/off:
 ```
-/pokedex <username> <generation>
+/herald status <on or off>
+```
+
+### weather
+
+Command to retrieve an official National Weather Service forecast. Currently, input can be either a city or exact latitude longitude coordinates. The next 6 timesteps are then printed:
+```
+/weather <latitude> <longitude>
 ```
 
 ### bet
@@ -60,7 +63,7 @@ This command will randomly choose 1 item among the items given as input:
 
 To use this command with items with spaces in it, surround the items by quotes:
 ```
-/bet "Play Pokemon Go" "Spend time with girlfriend"
+/bet "Play Rocket League" "Spend time with girlfriend"
 ```
 
 ###### NOTE: This command can be used for any number of inputs
@@ -72,21 +75,14 @@ This is mainly used by me to keep track of websites I frequent:
 /link <link abbreviation>
 ```
 
-### nuke
-
-This is only to be used by admins. This will clear out an entire channel. I mainly use it within my test channels when debugging new commands:
-```
-/nuke
-```
-
 ### clean
 
-Similar to nuke, this command is only to be used by admins. This command will delete the last <N> messages:
+This command is only to be used by admins. This command will delete the last <N> messages:
 ```
 /clean <N>
 ```
 
-###### NOTE: 'nuke' and 'clean' will not work if the messages are over 10 days old
+###### NOTE: 'clean' will not work if the messages are over 10 days old
 
 ## Other Tasks
 
@@ -104,11 +100,19 @@ Within the media channel, and another channel we use for Stat Tracker bot, this 
 
 Whenever the word 'yeet' is typed in a message, the bot will respond with the :eyes: emoji. Again, we're dumb.
 
+### Ratio Reaction
+
+If the word 'ratio' is typed by itself, Dumbbot will support you by adding '+ you fell off + didn't ask'
+
 ## Under Construction
 
-### Attachment Reposting
+### Tracker Network Integration
 
-I am currently *trying* to have the bot repost any attachments into the media channel as well. This requires the use of the aiohttp module so I am trying to understand how that works.
+We would like for the bot to be able to pull stats for various games that work with the Tracker Network.
+
+### NFL Pick Em's
+
+Pull all the NFL spreads every week and store everyones picks and can compare how everyone is doing.
 
 ## Authors
 
