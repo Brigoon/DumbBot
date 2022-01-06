@@ -2,6 +2,16 @@
 
 This is a project that started as a way for me to learn Python but has turned into a fun way to interact with friends.
 
+## Dependencies
+
+This bot uses various other Python libraries. Their names and versions will be up to date below:
+
+discord.py - 1.7.3
+aiohttp    - 3.7.4.post0
+pytube     - 11.0.2
+pydub      - 0.25.1
+pytz       - 2019.3
+
 ## Usage
 
 There is a shell script (for bash) included in this repository that will try to start the bot. If it doesn't start after 10 tries, it will wait 60 seconds. You can use this script simply by navigating to the containing folder and executing it:
