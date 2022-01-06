@@ -6,10 +6,10 @@ This is a project that started as a way for me to learn Python but has turned in
 
 This bot uses various other Python libraries. Their names and versions will be up to date below:
 
-discord.py - 1.7.3
-aiohttp    - 3.7.4.post0
-pytube     - 11.0.2
-pydub      - 0.25.1
+discord.py - 1.7.3  
+aiohttp    - 3.7.4.post0  
+pytube     - 11.0.2  
+pydub      - 0.25.1  
 pytz       - 2019.3
 
 ## Usage
