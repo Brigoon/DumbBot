@@ -159,7 +159,6 @@ async def playHerald(member):
         if (isinstance(heraldDict[member.id].lastUseTime, type(None))) or \
             ((current_time - heraldDict[member.id].lastUseTime).total_seconds() > wait_timer):
 
-            time.sleep(0.5)
             try:
                 # Connect to voice channel
                 vc = await member.voice.channel.connect()
@@ -169,7 +168,6 @@ async def playHerald(member):
 
                 # Set and start audio
                 audio = discord.FFmpegPCMAudio(heraldDict[member.id].editedMp3Link)
-                time.sleep(0.5)
                 vc.play(discord.PCMVolumeTransformer(audio, volume=0.7))
 
                 print(f'{member.name} has played Herald!')
