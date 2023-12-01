@@ -87,6 +87,32 @@ async def bet(ctx, *args):
 		await ctx.send('Need at least 2 inputs, use \'/help bet\'')
 
 @bot.command()
+async def spongebob(ctx, *args):
+	'''Will capitalize every other letter in a provided string.
+	/spongebob "menoy menoy"'''
+	if len(args) > 1:
+		await ctx.send('If you\'re phrase is more than one word, surround it with quotations')
+		return
+	elif len(args) < 1:
+		await ctx.send('A phrase is needed, run /help spongebob')
+		return
+
+	counter = 0
+	msg = ""
+	for i in args[0].lower():
+		if not i.isalpha():
+			msg += i
+		elif counter % 2 == 1:
+			msg += i.upper()
+			counter += 1
+		else:
+			msg += i
+			counter += 1
+
+	await ctx.send(msg)
+
+
+@bot.command()
 async def herald(ctx, *args):
 	'''This is Herald, our friendly introduction officianado. To begin, give this command a YouTube
 	link and from there you can change how long Herald will play the audio as well as what time in
