@@ -3,9 +3,11 @@ from helper import *
 from weather import *
 from herald import *
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.message_content = True
+
 bot_prefix = "/"
-bot = commands.Bot(command_prefix=bot_prefix)
+bot = commands.Bot(command_prefix=bot_prefix, intents=intents)
 regexp_yeet = re.compile('yee[e]*t')
 regexp_sheesh = re.compile('shee[e]*sh')
 
@@ -19,33 +21,34 @@ async def on_message(ctx):
 	print(f'{ctx.author.name} said:\"{ctx.content}\" in #{ctx.channel.name}')
 
 	'''Don't react to a message sent by the bot'''
-	if ctx.author.id != 380935311540355072:
+	if ctx.author == bot.user:
+		return
 
-		'''Paste any link sent in private server to the media channel'''
-		if ctx.content.startswith('http') and ctx.guild.id == 379321436478636034:
-			channel = bot.get_channel(380028343611031565)
-			await channel.send(ctx.content)
+	'''Paste any link sent in private server to the media channel'''
+	if ctx.content.startswith('http') and ctx.guild.id == 379321436478636034:
+		channel = bot.get_channel(380028343611031565)
+		await channel.send(ctx.content)
 
-		'''Delete any message that is not a link in the media channel'''
-		if (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
-			await ctx.delete()
+	'''Delete any message that is not a link in the media channel'''
+	if (not ctx.content.startswith('http')) and ctx.channel.id == 380028343611031565 and not ctx.attachments:
+		await ctx.delete()
 
-		'''Add the :eyes: reaction to every message containing the word yeet'''
-		if regexp_yeet.search(ctx.content.lower()):
-			await ctx.add_reaction('\N{EYES}')
+	'''Add the :eyes: reaction to every message containing the word yeet'''
+	if regexp_yeet.search(ctx.content.lower()):
+		await ctx.add_reaction('\N{EYES}')
 
-		'''Add the sheesh reaction to every message containing the word sheesh'''
-		if regexp_sheesh.search(ctx.content.lower()):
-			await ctx.add_reaction('<:sheesh:918963217722667038>')
+	'''Add the sheesh reaction to every message containing the word sheesh'''
+	if regexp_sheesh.search(ctx.content.lower()):
+		await ctx.add_reaction('<:sheesh:918963217722667038>')
 
-		'''Send a custom message whenever stipe is mentioned'''
-		if 'stipe' in ctx.content.lower():
-			await ctx.channel.send('Stipe is a nugget')
+	'''Send a custom message whenever stipe is mentioned'''
+	if 'stipe' in ctx.content.lower():
+		await ctx.channel.send('Stipe is a nugget')
 
-		if ctx.content.lower() == 'ratio':
-			await ctx.channel.send("+ you fell off + didn't ask")
+	if ctx.content.lower() == 'ratio':
+		await ctx.channel.send("+ you fell off + didn't ask")
 
-		await bot.process_commands(ctx)
+	await bot.process_commands(ctx)
 
 @bot.event
 async def on_voice_state_update(member, before, after):

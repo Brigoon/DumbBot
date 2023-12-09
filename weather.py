@@ -3,10 +3,6 @@ import aiohttp
 import datetime
 import pytz
 
-client = discord.Client()
-bot_prefix = "/"
-bot = commands.Bot(command_prefix=bot_prefix)
-
 def _floatConvert(value):
     try:
         value = round(float(value), 4)
