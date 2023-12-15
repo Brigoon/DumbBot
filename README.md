@@ -6,11 +6,11 @@ This is a project that started as a way for me to learn Python but has turned in
 
 This bot uses various other Python libraries. Their names and versions will be up to date below:
 
-discord.py - 1.7.3  
-aiohttp    - 3.7.4.post0  
-pytube     - 12.0.0 
+discord.py - 2.3.2
+aiohttp    - 3.9.1 
+pytube     - 15.0.0
 pydub      - 0.25.1  
-pytz       - 2019.3
+pytz       - 2023.3.post1
 
 ## Usage
 
@@ -74,6 +74,13 @@ This command will randomly choose 1 item among the items given as input:
 To use this command with items with spaces in it, surround the items by quotes:
 ```
 /bet "Play Rocket League" "Spend time with girlfriend"
+```
+
+### spongebob
+
+This command will capitalize every other letter in a string, like the sassy spongebob meme:
+```
+/spongebob "rocket league is a really good game"
 ```
 
 ###### NOTE: This command can be used for any number of inputs
